@@ -47,8 +47,13 @@ export default function ProductsPage() {
         limit: 12,
       };
 
-      if (category !== "All") params.category = category;
-      if (search) params.search = search;
+      if (category !== "All") {
+        params.category = category;
+      }
+
+      if (search) {
+        params.search = search;
+      }
 
       const response = await productAPI.getAll(params);
 
@@ -64,14 +69,17 @@ export default function ProductsPage() {
 
   const handleAddToCart = (product) => {
     addItem(product, 1);
-    toast.success(`${product.name} added to cart!`);
+    toast.success(product.name + " added to cart!");
   };
 
   return (
     <div className="min-h-screen bg-slate-950">
-      {/* HERO / HEADER */}
+      {/* =====================================================
+          HERO / HEADER
+      ====================================================== */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-purple-950 px-6 py-20">
         <div className="absolute -left-32 -top-32 h-80 w-80 rounded-full bg-blue-500/20 blur-3xl" />
+
         <div className="absolute -right-32 top-10 h-96 w-96 rounded-full bg-purple-500/20 blur-3xl" />
 
         <div className="relative mx-auto max-w-7xl text-center">
@@ -94,7 +102,9 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* FILTER AREA */}
+      {/* =====================================================
+          FILTER AREA
+      ====================================================== */}
       <section className="bg-slate-50 px-6 py-8">
         <div className="mx-auto max-w-7xl">
           <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-lg shadow-slate-200/50">
@@ -155,7 +165,9 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* PRODUCTS */}
+      {/* =====================================================
+          PRODUCTS
+      ====================================================== */}
       <section className="bg-slate-50 px-6 pb-24">
         <div className="mx-auto max-w-7xl">
           {/* RESULT COUNT */}
@@ -187,17 +199,21 @@ export default function ProductsPage() {
                   className="overflow-hidden rounded-[2rem] bg-white shadow-sm"
                 >
                   <div className="h-64 animate-pulse bg-slate-200" />
+
                   <div className="space-y-3 p-6">
                     <div className="h-4 w-20 animate-pulse rounded bg-slate-200" />
+
                     <div className="h-6 w-3/4 animate-pulse rounded bg-slate-200" />
+
                     <div className="h-4 w-full animate-pulse rounded bg-slate-200" />
+
                     <div className="h-11 w-full animate-pulse rounded-xl bg-slate-200" />
                   </div>
                 </div>
               ))}
             </div>
           ) : products.length === 0 ? (
-            /* EMPTY */
+            /* EMPTY STATE */
             <div className="rounded-[2rem] bg-white px-6 py-24 text-center shadow-sm">
               <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-slate-100">
                 <Search className="h-9 w-9 text-slate-400" />
@@ -223,16 +239,14 @@ export default function ProductsPage() {
             </div>
           ) : (
             <>
-              {/* GRID */}
+              {/* PRODUCT GRID */}
               <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {products.map((product, index) => (
                   <div
                     key={product._id}
                     className="group overflow-hidden rounded-[2rem] border border-slate-100 bg-white shadow-sm transition duration-500 hover:-translate-y-2 hover:shadow-2xl"
                     style={{
-                      animation: `fadeUp 0.6s ease-out ${
-                        index * 0.06
-                      }s both`,
+                      animation: `fadeUp 0.6s ease-out ${index * 0.06}s both`,
                     }}
                   >
                     {/* IMAGE */}
@@ -319,6 +333,7 @@ export default function ProductsPage() {
                         }`}
                       >
                         <ShoppingCart size={18} />
+
                         {product.stock === 0
                           ? "Out of Stock"
                           : "Add to Cart"}
@@ -354,6 +369,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
+      {/* ANIMATIONS */}
       <style>
         {`
           @keyframes fadeUp {
@@ -361,6 +377,7 @@ export default function ProductsPage() {
               opacity: 0;
               transform: translateY(25px);
             }
+
             to {
               opacity: 1;
               transform: translateY(0);
