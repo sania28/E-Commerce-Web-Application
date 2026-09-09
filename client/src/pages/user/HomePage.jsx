@@ -10,6 +10,9 @@ import {
   Headphones,
   Watch,
   Shirt,
+  BookOpen,
+  Dumbbell,
+  Heart,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { productAPI } from "../../services/api";
@@ -43,202 +46,282 @@ export default function HomePage() {
     },
     {
       name: "Books",
-      icon: Package,
+      icon: BookOpen,
       description: "Knowledge & inspiration",
     },
     {
       name: "Sports",
-      icon: ShoppingBag,
+      icon: Dumbbell,
       description: "Gear for an active life",
     },
   ];
 
   const features = [
     {
-      icon: ShoppingBag,
-      title: "Quality Products",
-      desc: "Carefully selected products for you",
+      icon: Shield,
+      title: "Secure Shopping",
+      desc: "Your account and information stay protected.",
     },
     {
       icon: Truck,
       title: "Fast Delivery",
-      desc: "Quick and reliable doorstep delivery",
-    },
-    {
-      icon: Shield,
-      title: "Secure Shopping",
-      desc: "Your data and account stay protected",
+      desc: "Quick and reliable delivery to your doorstep.",
     },
     {
       icon: Package,
-      title: "Easy Returns",
-      desc: "Simple and hassle-free returns",
+      title: "Quality Products",
+      desc: "Handpicked products for your everyday needs.",
+    },
+    {
+      icon: Heart,
+      title: "Customer First",
+      desc: "A smooth and enjoyable shopping experience.",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-white text-gray-800">
-      {/* HERO SECTION */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-white to-orange-100">
-        {/* Decorative circles */}
-        <div className="absolute -top-24 -right-24 w-80 h-80 bg-orange-200 rounded-full opacity-40 blur-3xl"></div>
-        <div className="absolute -bottom-32 -left-20 w-96 h-96 bg-orange-100 rounded-full opacity-60 blur-3xl"></div>
+    <div className="min-h-screen overflow-hidden bg-slate-950 text-white">
 
-        <div className="relative max-w-7xl mx-auto px-6 py-20 md:py-28">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Hero Text */}
-            <div className="text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full bg-white shadow-sm border border-orange-100 text-orange-600 font-medium">
-                <Sparkles className="w-4 h-4" />
-                Your everyday shopping destination
+      {/* ================= HERO ================= */}
+      <section className="relative min-h-[calc(100vh-72px)] overflow-hidden">
+
+        {/* Animated Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950 to-purple-950" />
+
+        <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-blue-500/20 blur-3xl animate-pulse" />
+
+        <div
+          className="absolute top-40 -right-32 h-[500px] w-[500px] rounded-full bg-purple-500/20 blur-3xl"
+          style={{
+            animation: "float 7s ease-in-out infinite",
+          }}
+        />
+
+        <div
+          className="absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl"
+          style={{
+            animation: "float 9s ease-in-out infinite reverse",
+          }}
+        />
+
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-6 py-20 lg:grid-cols-2 lg:py-28">
+
+          {/* Hero Text */}
+          <div
+            className="text-center lg:text-left"
+            style={{
+              animation: "fadeUp 0.9s ease-out",
+            }}
+          >
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-400/10 px-4 py-2 text-sm font-semibold text-blue-300 backdrop-blur">
+              <Sparkles className="h-4 w-4" />
+              Welcome to the future of shopping
+            </div>
+
+            <h1 className="text-5xl font-black leading-tight sm:text-6xl lg:text-7xl">
+              Shop
+              <span className="block bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Smarter.
+              </span>
+              <span className="block text-white">
+                Live Better.
+              </span>
+            </h1>
+
+            <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-slate-300 lg:mx-0">
+              Discover amazing products, explore new collections and enjoy
+              a simple shopping experience — all in one place.
+            </p>
+
+            <div className="mt-9 flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
+
+              <Link
+                to="/products"
+                className="group inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-8 py-4 text-lg font-bold shadow-lg shadow-blue-500/20 transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-purple-500/30"
+              >
+                Shop Now
+                <ArrowRight className="h-5 w-5 transition group-hover:translate-x-1" />
+              </Link>
+
+              <Link
+                to="/products"
+                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/5 px-8 py-4 text-lg font-bold backdrop-blur transition duration-300 hover:-translate-y-1 hover:bg-white/10"
+              >
+                Explore Collection
+              </Link>
+
+            </div>
+
+            {/* Stats */}
+            <div className="mt-12 flex justify-center gap-8 sm:gap-12 lg:justify-start">
+              <div>
+                <p className="text-2xl font-black text-white">12+</p>
+                <p className="text-sm text-slate-400">Products</p>
               </div>
 
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-gray-900">
-                Shop Smart.
-                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-700">
-                  Live Better.
+              <div className="h-10 w-px bg-white/10" />
+
+              <div>
+                <p className="text-2xl font-black text-white">6+</p>
+                <p className="text-sm text-slate-400">Categories</p>
+              </div>
+
+              <div className="h-10 w-px bg-white/10" />
+
+              <div>
+                <p className="text-2xl font-black text-white">24/7</p>
+                <p className="text-sm text-slate-400">Shopping</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Hero Product Card */}
+          <div
+            className="relative mx-auto w-full max-w-lg"
+            style={{
+              animation: "fadeUp 1.1s ease-out",
+            }}
+          >
+
+            <div
+              className="absolute -inset-10 rounded-full bg-blue-500/20 blur-3xl"
+              style={{
+                animation: "pulseGlow 4s ease-in-out infinite",
+              }}
+            />
+
+            <div
+              className="relative rounded-[2rem] border border-white/10 bg-white/10 p-6 shadow-2xl backdrop-blur-xl"
+              style={{
+                animation: "float 6s ease-in-out infinite",
+              }}
+            >
+
+              <div className="mb-6 flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-slate-400">SHOPMART</p>
+                  <h3 className="text-2xl font-bold">
+                    Trending Picks
+                  </h3>
+                </div>
+
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg">
+                  <ShoppingBag className="h-6 w-6" />
+                </div>
+              </div>
+
+              {/* Product Mini Card */}
+              <div className="mb-4 flex items-center gap-4 rounded-2xl border border-white/10 bg-white/10 p-4 transition hover:bg-white/15">
+
+                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500/30 to-cyan-400/20">
+                  <Headphones className="h-8 w-8 text-cyan-300" />
+                </div>
+
+                <div className="flex-1">
+                  <p className="font-bold">
+                    Wireless Headphones
+                  </p>
+                  <p className="text-sm text-slate-400">
+                    Premium sound experience
+                  </p>
+                </div>
+
+                <span className="font-bold text-cyan-300">
+                  ₹299
                 </span>
-              </h1>
+              </div>
 
-              <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                Discover quality products, amazing deals, and everything you
-                need — all in one place.
+              {/* Second Card */}
+              <div className="mb-4 flex items-center gap-4 rounded-2xl border border-white/10 bg-white/5 p-4 transition hover:bg-white/10">
+
+                <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500/30 to-pink-400/20">
+                  <Watch className="h-8 w-8 text-purple-300" />
+                </div>
+
+                <div className="flex-1">
+                  <p className="font-bold">
+                    Smart Fitness Watch
+                  </p>
+                  <p className="text-sm text-slate-400">
+                    Track your everyday goals
+                  </p>
+                </div>
+
+                <span className="font-bold text-purple-300">
+                  ₹249
+                </span>
+              </div>
+
+              {/* Offer */}
+              <div className="flex items-center justify-between rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 p-5 shadow-lg">
+
+                <div>
+                  <p className="font-black">
+                    Special Offers
+                  </p>
+                  <p className="text-sm text-blue-100">
+                    Something new awaits
+                  </p>
+                </div>
+
+                <ArrowRight className="h-6 w-6" />
+              </div>
+            </div>
+
+            {/* Floating Badge */}
+            <div
+              className="absolute -right-4 top-8 rounded-2xl border border-white/10 bg-white/10 px-4 py-3 shadow-xl backdrop-blur-xl"
+              style={{
+                animation: "float 4s ease-in-out infinite",
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
+                <span className="font-bold">Top Picks</span>
+              </div>
+            </div>
+
+            <div
+              className="absolute -bottom-5 -left-5 rounded-2xl border border-white/10 bg-white/10 px-5 py-3 shadow-xl backdrop-blur-xl"
+              style={{
+                animation: "float 5s ease-in-out infinite reverse",
+              }}
+            >
+              <p className="text-xs text-slate-400">
+                Shopping made
               </p>
-
-              <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link
-                  to="/products"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 text-white font-bold text-lg shadow-lg hover:shadow-xl hover:scale-105 transition duration-300"
-                >
-                  Shop Now
-                  <ArrowRight className="w-5 h-5" />
-                </Link>
-
-                <Link
-                  to="/products"
-                  className="inline-flex items-center justify-center px-7 py-4 rounded-full bg-white border-2 border-orange-200 text-orange-600 font-bold text-lg hover:bg-orange-50 transition duration-300"
-                >
-                  Explore Products
-                </Link>
-              </div>
-
-              {/* Small stats */}
-              <div className="mt-10 flex flex-wrap justify-center lg:justify-start gap-8">
-                <div>
-                  <p className="text-2xl font-bold text-gray-900">12+</p>
-                  <p className="text-sm text-gray-500">Products</p>
-                </div>
-
-                <div>
-                  <p className="text-2xl font-bold text-gray-900">6+</p>
-                  <p className="text-sm text-gray-500">Categories</p>
-                </div>
-
-                <div>
-                  <p className="text-2xl font-bold text-gray-900">24/7</p>
-                  <p className="text-sm text-gray-500">Shopping</p>
-                </div>
-              </div>
+              <p className="font-bold text-cyan-300">
+                Simple & Easy
+              </p>
             </div>
 
-            {/* Hero Visual */}
-            <div className="relative hidden md:block">
-              <div className="relative mx-auto max-w-lg">
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-600 rounded-[3rem] rotate-6 opacity-20"></div>
-
-                <div className="relative bg-white rounded-[3rem] shadow-2xl p-8 border border-orange-100">
-                  <div className="flex items-center justify-between mb-8">
-                    <div>
-                      <p className="text-sm text-gray-500">ShopMart</p>
-                      <h3 className="text-2xl font-bold">Featured Picks</h3>
-                    </div>
-
-                    <div className="w-12 h-12 rounded-2xl bg-orange-100 flex items-center justify-center">
-                      <ShoppingBag className="text-orange-600 w-6 h-6" />
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-4 p-4 rounded-2xl bg-orange-50">
-                      <div className="w-16 h-16 rounded-xl bg-orange-200 flex items-center justify-center">
-                        <Headphones className="w-8 h-8 text-orange-700" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="font-semibold">Wireless Headphones</p>
-                        <p className="text-sm text-gray-500">
-                          Premium sound experience
-                        </p>
-                      </div>
-                      <span className="font-bold text-orange-600">₹299</span>
-                    </div>
-
-                    <div className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50">
-                      <div className="w-16 h-16 rounded-xl bg-gray-200 flex items-center justify-center">
-                        <Watch className="w-8 h-8 text-gray-700" />
-                      </div>
-                      <div className="flex-1">
-                        <p className="font-semibold">Smart Fitness Watch</p>
-                        <p className="text-sm text-gray-500">
-                          Track your everyday goals
-                        </p>
-                      </div>
-                      <span className="font-bold text-orange-600">₹249</span>
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 rounded-2xl bg-gradient-to-r from-orange-500 to-orange-600 text-white">
-                      <div>
-                        <p className="font-bold">Special Offers</p>
-                        <p className="text-sm text-orange-100">
-                          Discover something new today
-                        </p>
-                      </div>
-                      <ArrowRight className="w-6 h-6" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Floating badge */}
-                <div className="absolute -right-5 top-10 bg-white shadow-xl rounded-2xl px-4 py-3 flex items-center gap-2">
-                  <Star className="w-5 h-5 fill-orange-500 text-orange-500" />
-                  <span className="font-semibold">Top Picks</span>
-                </div>
-
-                <div className="absolute -left-6 bottom-10 bg-white shadow-xl rounded-2xl px-4 py-3">
-                  <p className="text-xs text-gray-500">Shopping made</p>
-                  <p className="font-bold text-orange-600">Simple & Easy</p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* CATEGORIES */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
-            <div>
-              <p className="text-orange-600 font-semibold uppercase tracking-wider text-sm">
-                Explore
-              </p>
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2">
-                Shop by Category
-              </h2>
-              <p className="text-gray-500 mt-3">
-                Find exactly what you're looking for.
-              </p>
-            </div>
+      {/* ================= CATEGORIES ================= */}
+      <section className="bg-white px-6 py-20 text-slate-900">
 
-            <Link
-              to="/products"
-              className="text-orange-600 font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all"
-            >
-              View all <ArrowRight className="w-4 h-4" />
-            </Link>
+        <div className="mx-auto max-w-7xl">
+
+          <div className="mb-12 text-center">
+            <p className="font-semibold uppercase tracking-widest text-blue-600">
+              Explore
+            </p>
+
+            <h2 className="mt-2 text-4xl font-black sm:text-5xl">
+              Shop by Category
+            </h2>
+
+            <p className="mx-auto mt-4 max-w-xl text-slate-500">
+              Find everything you need across our carefully selected
+              categories.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {categories.map((category) => {
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+
+            {categories.map((category, index) => {
               const Icon = category.icon;
 
               return (
@@ -247,235 +330,317 @@ export default function HomePage() {
                   to={`/products?category=${encodeURIComponent(
                     category.name
                   )}`}
-                  className="group p-6 rounded-3xl border border-gray-100 bg-gradient-to-br from-white to-orange-50 hover:border-orange-200 hover:shadow-xl hover:-translate-y-1 transition duration-300"
+                  className="group relative overflow-hidden rounded-3xl border border-slate-100 bg-gradient-to-br from-slate-50 to-blue-50 p-7 transition duration-500 hover:-translate-y-3 hover:border-blue-200 hover:shadow-2xl"
+                  style={{
+                    animation: `fadeUp 0.6s ease-out ${index * 0.1}s both`,
+                  }}
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center mb-5 group-hover:bg-orange-500 transition duration-300">
-                    <Icon className="w-7 h-7 text-orange-600 group-hover:text-white transition duration-300" />
-                  </div>
 
-                  <h3 className="text-xl font-bold text-gray-900">
-                    {category.name}
-                  </h3>
+                  <div className="absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-500/10 transition duration-500 group-hover:scale-150" />
 
-                  <p className="text-gray-500 text-sm mt-2">
-                    {category.description}
-                  </p>
+                  <div className="relative">
+                    <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg transition duration-500 group-hover:rotate-6 group-hover:scale-110">
+                      <Icon className="h-8 w-8" />
+                    </div>
 
-                  <div className="mt-5 text-orange-600 text-sm font-semibold flex items-center gap-2">
-                    Explore
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition" />
+                    <h3 className="text-xl font-black">
+                      {category.name}
+                    </h3>
+
+                    <p className="mt-2 text-sm text-slate-500">
+                      {category.description}
+                    </p>
+
+                    <div className="mt-6 flex items-center gap-2 font-bold text-blue-600">
+                      Explore
+                      <ArrowRight className="h-4 w-4 transition group-hover:translate-x-2" />
+                    </div>
                   </div>
                 </Link>
               );
             })}
+
           </div>
         </div>
       </section>
 
-      {/* FEATURED PRODUCTS */}
-      <section className="py-20 px-6 bg-gradient-to-b from-orange-50 to-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 text-orange-600 font-semibold text-sm">
-              <Sparkles className="w-4 h-4" />
-              Handpicked for you
+      {/* ================= FEATURED PRODUCTS ================= */}
+      <section className="bg-slate-50 px-6 py-20 text-slate-900">
+
+        <div className="mx-auto max-w-7xl">
+
+          <div className="mb-12 flex flex-col items-center justify-between gap-4 md:flex-row">
+
+            <div>
+              <p className="font-semibold uppercase tracking-widest text-purple-600">
+                Handpicked
+              </p>
+
+              <h2 className="mt-2 text-4xl font-black sm:text-5xl">
+                Featured Products
+              </h2>
+
+              <p className="mt-3 text-slate-500">
+                Popular picks from our collection.
+              </p>
             </div>
 
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-4">
-              Featured Products
-            </h2>
+            <Link
+              to="/products"
+              className="group flex items-center gap-2 font-bold text-blue-600"
+            >
+              View All
+              <ArrowRight className="h-5 w-5 transition group-hover:translate-x-2" />
+            </Link>
 
-            <p className="text-gray-500 mt-3 max-w-2xl mx-auto">
-              Explore some of our most popular products and discover your next
-              favorite.
-            </p>
           </div>
 
           {featuredProducts.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+            <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
+
               {featuredProducts.map((product) => (
                 <Link
                   key={product._id}
                   to={`/products/${product._id}`}
-                  className="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl hover:-translate-y-2 transition duration-300"
+                  className="group overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-sm transition duration-500 hover:-translate-y-3 hover:shadow-2xl"
                 >
-                  <div className="relative h-64 overflow-hidden bg-gray-100">
+
+                  <div className="relative h-64 overflow-hidden bg-slate-100">
+
                     <img
                       src={
                         product.images?.[0] ||
                         "https://via.placeholder.com/500"
                       }
                       alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
                     />
 
-                    <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-white/90 backdrop-blur text-xs font-bold text-gray-700">
+                    <div className="absolute left-4 top-4 rounded-full bg-slate-950/80 px-3 py-1.5 text-xs font-bold text-white backdrop-blur">
                       {product.category}
                     </div>
 
-                    <div className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                      <ArrowRight className="w-5 h-5 text-orange-600" />
+                    <div className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-blue-600 opacity-0 shadow-lg transition duration-300 group-hover:opacity-100">
+                      <ArrowRight className="h-5 w-5" />
                     </div>
+
                   </div>
 
                   <div className="p-6">
-                    <div className="flex items-center gap-1 mb-3">
+
+                    <div className="mb-3 flex items-center gap-1">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <Star
                           key={star}
-                          className="w-4 h-4 fill-orange-400 text-orange-400"
+                          className="h-4 w-4 fill-yellow-400 text-yellow-400"
                         />
                       ))}
-                      <span className="text-xs text-gray-400 ml-1">
+
+                      <span className="ml-2 text-xs text-slate-400">
                         Popular
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition">
+                    <h3 className="text-xl font-black transition group-hover:text-blue-600">
                       {product.name}
                     </h3>
 
-                    <p className="text-gray-500 text-sm mt-2 line-clamp-2 min-h-[40px]">
+                    <p className="mt-2 line-clamp-2 min-h-[40px] text-sm text-slate-500">
                       {product.description}
                     </p>
 
-                    <div className="flex items-center justify-between mt-5">
-                      <span className="text-2xl font-extrabold text-orange-600">
+                    <div className="mt-5 flex items-center justify-between">
+
+                      <span className="text-2xl font-black text-blue-600">
                         ₹{Number(product.price).toFixed(2)}
                       </span>
 
-                      <span className="text-sm font-semibold text-gray-500 group-hover:text-orange-600 transition">
-                        View Product →
+                      <span className="text-sm font-bold text-slate-400 transition group-hover:text-blue-600">
+                        View →
                       </span>
+
                     </div>
                   </div>
                 </Link>
               ))}
+
             </div>
           ) : (
-            <div className="text-center py-16 bg-white rounded-3xl border border-gray-100">
-              <ShoppingBag className="w-12 h-12 mx-auto text-gray-300 mb-4" />
-              <p className="text-gray-500">
-                Featured products will appear here.
+            <div className="rounded-3xl bg-white py-16 text-center shadow-sm">
+              <ShoppingBag className="mx-auto mb-4 h-12 w-12 text-slate-300" />
+              <p className="text-slate-500">
+                Products will appear here.
               </p>
             </div>
           )}
 
-          <div className="text-center mt-12">
+          <div className="mt-12 text-center">
             <Link
               to="/products"
-              className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gray-900 text-white font-bold hover:bg-orange-600 hover:shadow-xl transition duration-300"
+              className="inline-flex items-center gap-2 rounded-full bg-slate-950 px-8 py-4 font-bold text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-blue-600 hover:shadow-xl"
             >
               Browse All Products
-              <ArrowRight className="w-5 h-5" />
+              <ArrowRight className="h-5 w-5" />
             </Link>
           </div>
+
         </div>
       </section>
 
-      {/* PROMO BANNER */}
+      {/* ================= PROMO ================= */}
       <section className="px-6 py-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-r from-orange-500 to-orange-700 px-8 py-12 md:px-14 md:py-14">
-            <div className="absolute -right-20 -top-20 w-72 h-72 rounded-full bg-white opacity-10"></div>
-            <div className="absolute -left-10 -bottom-32 w-80 h-80 rounded-full bg-white opacity-10"></div>
 
-            <div className="relative flex flex-col md:flex-row md:items-center md:justify-between gap-8">
-              <div className="text-white max-w-2xl">
-                <p className="text-orange-100 font-semibold mb-2">
-                  YOUR SHOPPING JOURNEY STARTS HERE
-                </p>
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-700 p-8 shadow-2xl md:p-14">
 
-                <h2 className="text-3xl md:text-4xl font-extrabold">
-                  Find something you'll love.
-                </h2>
+          <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
 
-                <p className="mt-3 text-orange-100">
-                  Browse our collection and discover products made for your
-                  everyday needs.
-                </p>
+            <div className="max-w-2xl">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-semibold text-blue-100">
+                <Sparkles className="h-4 w-4" />
+                SHOPMART EXPERIENCE
               </div>
 
-              <Link
-                to="/products"
-                className="inline-flex items-center justify-center gap-2 px-7 py-4 bg-white text-orange-600 rounded-full font-bold shadow-lg hover:scale-105 transition duration-300 whitespace-nowrap"
-              >
-                Start Shopping
-                <ArrowRight className="w-5 h-5" />
-              </Link>
+              <h2 className="text-3xl font-black md:text-4xl">
+                Find something you'll love.
+              </h2>
+
+              <p className="mt-3 text-blue-100">
+                Explore our collection and discover products made for
+                your everyday needs.
+              </p>
             </div>
+
+            <Link
+              to="/products"
+              className="inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-7 py-4 font-black text-blue-600 shadow-xl transition duration-300 hover:-translate-y-1 hover:scale-105"
+            >
+              Start Shopping
+              <ArrowRight className="h-5 w-5" />
+            </Link>
+
           </div>
         </div>
       </section>
 
-      {/* WHY CHOOSE US */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <p className="text-orange-600 font-semibold uppercase tracking-wider text-sm">
+      {/* ================= WHY SHOPMART ================= */}
+      <section className="bg-white px-6 py-20 text-slate-900">
+
+        <div className="mx-auto max-w-7xl">
+
+          <div className="mb-12 text-center">
+            <p className="font-semibold uppercase tracking-widest text-blue-600">
               Shop with confidence
             </p>
 
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mt-2">
-              Why Choose ShopMart?
+            <h2 className="mt-2 text-4xl font-black sm:text-5xl">
+              Why ShopMart?
             </h2>
 
-            <p className="text-gray-500 mt-3">
-              Everything you need for a smooth shopping experience.
+            <p className="mt-4 text-slate-500">
+              Everything you need for a better shopping experience.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature) => {
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+
+            {features.map((feature, index) => {
               const Icon = feature.icon;
 
               return (
                 <div
                   key={feature.title}
-                  className="group p-7 rounded-3xl border border-gray-100 bg-white hover:bg-orange-50 hover:border-orange-100 hover:shadow-lg transition duration-300"
+                  className="group rounded-3xl border border-slate-100 bg-white p-7 text-center shadow-sm transition duration-500 hover:-translate-y-2 hover:border-blue-100 hover:shadow-xl"
+                  style={{
+                    animation: `fadeUp 0.6s ease-out ${index * 0.1}s both`,
+                  }}
                 >
-                  <div className="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center mb-5 group-hover:bg-orange-500 transition duration-300">
-                    <Icon className="w-7 h-7 text-orange-600 group-hover:text-white transition duration-300" />
+
+                  <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg transition duration-500 group-hover:rotate-6 group-hover:scale-110">
+                    <Icon className="h-7 w-7" />
                   </div>
 
-                  <h3 className="text-lg font-bold text-gray-900">
+                  <h3 className="text-lg font-black">
                     {feature.title}
                   </h3>
 
-                  <p className="text-gray-500 text-sm mt-2 leading-relaxed">
+                  <p className="mt-2 text-sm leading-relaxed text-slate-500">
                     {feature.desc}
                   </p>
+
                 </div>
               );
             })}
+
           </div>
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section className="py-20 px-6 bg-gray-950">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="w-16 h-16 mx-auto rounded-2xl bg-orange-500 flex items-center justify-center mb-6">
-            <ShoppingBag className="w-8 h-8 text-white" />
+      {/* ================= FINAL CTA ================= */}
+      <section className="relative overflow-hidden bg-slate-950 px-6 py-24">
+
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-950 via-slate-950 to-purple-950" />
+
+        <div className="relative mx-auto max-w-4xl text-center">
+
+          <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg shadow-blue-500/20">
+            <ShoppingBag className="h-8 w-8" />
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white">
+          <h2 className="text-4xl font-black sm:text-5xl">
             Ready to start shopping?
           </h2>
 
-          <p className="text-gray-400 mt-4 text-lg">
-            Explore our collection and find your next favorite product.
+          <p className="mx-auto mt-5 max-w-xl text-lg text-slate-400">
+            Explore our collection and discover your next favorite product.
           </p>
 
           <Link
             to="/products"
-            className="inline-flex items-center gap-2 mt-8 px-8 py-4 rounded-full bg-orange-500 text-white font-bold text-lg hover:bg-orange-600 hover:scale-105 transition duration-300"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 px-8 py-4 text-lg font-black shadow-xl transition duration-300 hover:-translate-y-1 hover:scale-105"
           >
             Shop Now
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="h-5 w-5" />
           </Link>
+
         </div>
       </section>
+
+      {/* ================= ANIMATIONS ================= */}
+      <style>
+        {`
+          @keyframes float {
+            0%, 100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-12px);
+            }
+          }
+
+          @keyframes fadeUp {
+            from {
+              opacity: 0;
+              transform: translateY(30px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+
+          @keyframes pulseGlow {
+            0%, 100% {
+              opacity: 0.4;
+              transform: scale(1);
+            }
+            50% {
+              opacity: 0.7;
+              transform: scale(1.08);
+            }
+          }
+        `}
+      </style>
+
     </div>
   );
 }
