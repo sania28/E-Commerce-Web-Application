@@ -35,15 +35,15 @@ export default function ProductsPage() {
   ];
 
   useEffect(() => {
-    fetchProducts();
+    fetchProducts(1);
   }, [category, search]);
 
-  const fetchProducts = async (page = 1) => {
+  const fetchProducts = async (page) => {
     try {
       setLoading(true);
 
       const params = {
-        page,
+        page: page,
         limit: 12,
       };
 
@@ -51,8 +51,8 @@ export default function ProductsPage() {
         params.category = category;
       }
 
-      if (search) {
-        params.search = search;
+      if (search.trim() !== "") {
+        params.search = search.trim();
       }
 
       const response = await productAPI.getAll(params);
@@ -60,8 +60,9 @@ export default function ProductsPage() {
       setProducts(response.data.products || []);
       setPagination(response.data.pagination || {});
     } catch (error) {
+      console.error("Failed to fetch products:", error);
       toast.error("Failed to fetch products");
-      console.error(error);
+      setProducts([]);
     } finally {
       setLoading(false);
     }
@@ -72,11 +73,25 @@ export default function ProductsPage() {
     toast.success(product.name + " added to cart!");
   };
 
+  const getCategoryButtonClass = (cat) => {
+    if (category === cat) {
+      return "whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-bold transition bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/20";
+    }
+
+    return "whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-bold transition bg-slate-100 text-slate-600 hover:bg-blue-50 hover:text-blue-600";
+  };
+
+  const getPaginationButtonClass = (page) => {
+    if (pagination.page === page) {
+      return "h-11 min-w-11 rounded-xl px-4 font-bold transition bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/20";
+    }
+
+    return "h-11 min-w-11 rounded-xl px-4 font-bold transition bg-white text-slate-600 shadow-sm hover:bg-blue-50 hover:text-blue-600";
+  };
+
   return (
     <div className="min-h-screen bg-slate-950">
-      {/* =====================================================
-          HERO / HEADER
-      ====================================================== */}
+      {/* HERO */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-purple-950 px-6 py-20">
         <div className="absolute -left-32 -top-32 h-80 w-80 rounded-full bg-blue-500/20 blur-3xl" />
 
@@ -102,9 +117,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* =====================================================
-          FILTER AREA
-      ====================================================== */}
+      {/* FILTER AREA */}
       <section className="bg-slate-50 px-6 py-8">
         <div className="mx-auto max-w-7xl">
           <div className="rounded-[2rem] border border-slate-200 bg-white p-5 shadow-lg shadow-slate-200/50">
@@ -125,7 +138,7 @@ export default function ProductsPage() {
                 />
               </div>
 
-              {/* CATEGORY */}
+              {/* CATEGORY SELECT */}
               <div className="flex items-center gap-3">
                 <div className="hidden h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 sm:flex">
                   <SlidersHorizontal size={19} />
@@ -151,11 +164,7 @@ export default function ProductsPage() {
                 <button
                   key={cat}
                   onClick={() => setCategory(cat)}
-                  className={`whitespace-nowrap rounded-full px-5 py-2.5 text-sm font-bold transition ${
-                    category === cat
-                      ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/20"
-                      : "bg-slate-100 text-slate-600 hover:bg-blue-50 hover:text-blue-600"
-                  }`}
+                  className={getCategoryButtonClass(cat)}
                 >
                   {cat}
                 </button>
@@ -165,9 +174,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* =====================================================
-          PRODUCTS
-      ====================================================== */}
+      {/* PRODUCTS */}
       <section className="bg-slate-50 px-6 pb-24">
         <div className="mx-auto max-w-7xl">
           {/* RESULT COUNT */}
@@ -246,16 +253,22 @@ export default function ProductsPage() {
                     key={product._id}
                     className="group overflow-hidden rounded-[2rem] border border-slate-100 bg-white shadow-sm transition duration-500 hover:-translate-y-2 hover:shadow-2xl"
                     style={{
-                      animation: `fadeUp 0.6s ease-out ${index * 0.06}s both`,
+                      animationName: "fadeUp",
+                      animationDuration: "0.6s",
+                      animationTimingFunction: "ease-out",
+                      animationDelay: index * 0.06 + "s",
+                      animationFillMode: "both",
                     }}
                   >
                     {/* IMAGE */}
-                    <Link to={`/products/${product._id}`}>
+                    <Link to={"/products/" + product._id}>
                       <div className="relative h-64 overflow-hidden bg-slate-100">
                         <img
                           src={
-                            product.images?.[0] ||
-                            "https://via.placeholder.com/500"
+                            product.images &&
+                            product.images.length > 0
+                              ? product.images[0]
+                              : "https://via.placeholder.com/500"
                           }
                           alt={product.name}
                           className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
@@ -294,7 +307,7 @@ export default function ProductsPage() {
                       </div>
 
                       {/* NAME */}
-                      <Link to={`/products/${product._id}`}>
+                      <Link to={"/products/" + product._id}>
                         <h3 className="line-clamp-1 text-lg font-black text-slate-800 transition group-hover:text-blue-600">
                           {product.name}
                         </h3>
@@ -326,11 +339,11 @@ export default function ProductsPage() {
                       <button
                         onClick={() => handleAddToCart(product)}
                         disabled={product.stock === 0}
-                        className={`mt-5 flex w-full items-center justify-center gap-2 rounded-xl py-3.5 font-bold transition duration-300 ${
+                        className={
                           product.stock === 0
-                            ? "cursor-not-allowed bg-slate-200 text-slate-400"
-                            : "bg-slate-950 text-white shadow-lg hover:-translate-y-0.5 hover:bg-blue-600 hover:shadow-blue-500/20"
-                        }`}
+                            ? "mt-5 flex w-full items-center justify-center gap-2 rounded-xl py-3.5 font-bold transition duration-300 cursor-not-allowed bg-slate-200 text-slate-400"
+                            : "mt-5 flex w-full items-center justify-center gap-2 rounded-xl py-3.5 font-bold transition duration-300 bg-slate-950 text-white shadow-lg hover:-translate-y-0.5 hover:bg-blue-600 hover:shadow-blue-500/20"
+                        }
                       >
                         <ShoppingCart size={18} />
 
@@ -353,11 +366,7 @@ export default function ProductsPage() {
                     <button
                       key={page}
                       onClick={() => fetchProducts(page)}
-                      className={`h-11 min-w-11 rounded-xl px-4 font-bold transition ${
-                        pagination.page === page
-                          ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/20"
-                          : "bg-white text-slate-600 shadow-sm hover:bg-blue-50 hover:text-blue-600"
-                      }`}
+                      className={getPaginationButtonClass(page)}
                     >
                       {page}
                     </button>
