@@ -9,7 +9,7 @@
     "server": "nodemon index.js",
     "client": "cd client && npm run dev",
     "build": "cd client && npm run build",
-    "seed": "node server/seed.js"
+    "seed": "node seed.js"
   },
   "keywords": [
     "ecommerce",
