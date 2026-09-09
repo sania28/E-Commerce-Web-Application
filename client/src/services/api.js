@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "/api",
+  baseURL: `${import.meta.env.VITE_API_URL || ""}/api`,
   headers: {
     "Content-Type": "application/json",
   },
@@ -11,12 +11,15 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const authData = localStorage.getItem("auth-storage");
+
     if (authData) {
       const { token } = JSON.parse(authData).state;
+
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
     }
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -30,6 +33,7 @@ api.interceptors.response.use(
       localStorage.removeItem("auth-storage");
       window.location.href = "/login";
     }
+
     return Promise.reject(error);
   }
 );
@@ -79,8 +83,13 @@ export const adminOrderAPI = {
     api.put(`/admin/orders/${id}/status`, { status }),
   addNote: (id, note) => api.put(`/admin/orders/${id}/notes`, { note }),
   export: (orderIds) =>
-    api.post("/admin/orders/export", { orderIds }, { responseType: "blob" }),
-  getDashboardStats: () => api.get("/admin/orders/dashboard/stats"),
+    api.post(
+      "/admin/orders/export",
+      { orderIds },
+      { responseType: "blob" }
+    ),
+  getDashboardStats: () =>
+    api.get("/admin/orders/dashboard/stats"),
 };
 
 export default api;
