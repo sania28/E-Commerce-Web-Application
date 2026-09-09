@@ -36,10 +36,7 @@ export default function HomePage() {
 
     const timer = setTimeout(() => {
       if (!isDeleting) {
-        const nextText = currentWord.substring(
-          0,
-          typedText.length + 1
-        );
+        const nextText = currentWord.substring(0, typedText.length + 1);
 
         setTypedText(nextText);
 
@@ -128,9 +125,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen overflow-hidden bg-slate-950 text-white">
-      {/* =====================================================
-          HERO
-      ====================================================== */}
+      {/* HERO */}
       <section className="relative min-h-[calc(100vh-72px)] overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-blue-950 to-purple-950" />
 
@@ -179,8 +174,8 @@ export default function HomePage() {
             </h1>
 
             <p className="mx-auto mt-7 max-w-xl text-lg leading-relaxed text-slate-300 lg:mx-0">
-              Discover amazing products, explore new collections and enjoy
-              a seamless shopping experience — all in one place.
+              Discover amazing products, explore new collections and enjoy a
+              seamless shopping experience — all in one place.
             </p>
 
             <div className="mt-9 flex flex-col justify-center gap-4 sm:flex-row lg:justify-start">
@@ -189,10 +184,8 @@ export default function HomePage() {
                 className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 px-8 py-4 text-lg font-bold shadow-xl shadow-blue-500/20 transition duration-500 hover:-translate-y-1 hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/30"
               >
                 <span className="absolute inset-0 -translate-x-full bg-white/20 transition duration-700 group-hover:translate-x-full" />
-
                 <ShoppingBag className="relative h-5 w-5" />
                 <span className="relative">Shop Now</span>
-
                 <ArrowRight className="relative h-5 w-5 transition group-hover:translate-x-1" />
               </Link>
 
@@ -260,7 +253,6 @@ export default function HomePage() {
 
                 <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 shadow-lg shadow-blue-500/30">
                   <ShoppingBag className="h-6 w-6" />
-
                   <span className="absolute -right-1 -top-1 h-3 w-3 rounded-full bg-green-400 ring-4 ring-slate-900/50" />
                 </div>
               </div>
@@ -271,10 +263,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-bold">
-                    Wireless Headphones
-                  </p>
-
+                  <p className="truncate font-bold">Wireless Headphones</p>
                   <p className="mt-1 text-xs text-slate-400">
                     Premium sound experience
                   </p>
@@ -289,10 +278,7 @@ export default function HomePage() {
                 </div>
 
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-bold">
-                    Smart Fitness Watch
-                  </p>
-
+                  <p className="truncate font-bold">Smart Fitness Watch</p>
                   <p className="mt-1 text-xs text-slate-400">
                     Track your everyday goals
                   </p>
@@ -348,7 +334,6 @@ export default function HomePage() {
 
                 <div>
                   <p className="text-[10px] text-slate-500">EXPERIENCE</p>
-
                   <p className="text-sm font-bold text-cyan-300">
                     Simple & Easy
                   </p>
@@ -386,10 +371,14 @@ export default function HomePage() {
               return (
                 <Link
                   key={category.name}
-                  to={`/products?category=${encodeURIComponent(category.name)}`}
+                  to={
+                    "/products?category=" +
+                    encodeURIComponent(category.name)
+                  }
                   className="group relative overflow-hidden rounded-[2rem] border border-slate-100 bg-gradient-to-br from-white to-slate-50 p-7 shadow-sm transition duration-500 hover:-translate-y-3 hover:border-blue-200 hover:shadow-2xl"
                   style={{
-                    animation: `fadeUp 0.6s ease-out ${index * 0.1}s both`,
+                    animation:
+                      "fadeUp 0.6s ease-out " + index * 0.1 + "s both",
                   }}
                 >
                   <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-blue-500/5 transition duration-700 group-hover:scale-[2]" />
@@ -399,9 +388,7 @@ export default function HomePage() {
                       <Icon className="h-8 w-8" />
                     </div>
 
-                    <h3 className="text-xl font-black">
-                      {category.name}
-                    </h3>
+                    <h3 className="text-xl font-black">{category.name}</h3>
 
                     <p className="mt-2 text-sm leading-relaxed text-slate-500">
                       {category.description}
@@ -451,17 +438,19 @@ export default function HomePage() {
               {featuredProducts.map((product, index) => (
                 <Link
                   key={product._id}
-                  to={`/products/${product._id}`}
+                  to={"/products/" + product._id}
                   className="group overflow-hidden rounded-[2rem] border border-slate-100 bg-white shadow-sm transition duration-500 hover:-translate-y-3 hover:shadow-2xl"
                   style={{
-                    animation: `fadeUp 0.7s ease-out ${index * 0.08}s both`,
+                    animation:
+                      "fadeUp 0.7s ease-out " + index * 0.08 + "s both",
                   }}
                 >
                   <div className="relative h-64 overflow-hidden bg-slate-100">
                     <img
                       src={
-                        product.images?.[0] ||
-                        "https://via.placeholder.com/500"
+                        product.images && product.images.length > 0
+                          ? product.images[0]
+                          : "https://via.placeholder.com/500"
                       }
                       alt={product.name}
                       className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
@@ -594,16 +583,15 @@ export default function HomePage() {
                   key={feature.title}
                   className="group rounded-[2rem] border border-slate-100 bg-white p-7 text-center shadow-sm transition duration-500 hover:-translate-y-2 hover:border-blue-100 hover:shadow-xl"
                   style={{
-                    animation: `fadeUp 0.6s ease-out ${index * 0.1}s both`,
+                    animation:
+                      "fadeUp 0.6s ease-out " + index * 0.1 + "s both",
                   }}
                 >
                   <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/20 transition duration-500 group-hover:rotate-6 group-hover:scale-110">
                     <Icon className="h-7 w-7" />
                   </div>
 
-                  <h3 className="text-lg font-black">
-                    {feature.title}
-                  </h3>
+                  <h3 className="text-lg font-black">{feature.title}</h3>
 
                   <p className="mt-3 text-sm leading-relaxed text-slate-500">
                     {feature.desc}
