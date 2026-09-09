@@ -1,37 +1,44 @@
-```jsx
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
-  ShoppingCart,
-  User,
-  LogOut,
-  Package,
   ShoppingBag,
+  ShoppingCart,
+  Package,
+  User,
+  LogIn,
+  LogOut,
   Menu,
   X,
-  ChevronRight,
+  ShieldCheck,
 } from "lucide-react";
-import { useState } from "react";
 import { useAuthStore } from "../../store/authStore";
-import { useCartStore } from "../../store/cartStore";
-import toast from "react-hot-toast";
 
 export default function Navbar() {
-  const { user, token, logout } = useAuthStore();
-  const getTotalItems = useCartStore((state) => state.getTotalItems);
-  const navigate = useNavigate();
-
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const cartItems = getTotalItems();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const { user, token, logout } = useAuthStore();
+
+  const cartItems = user?.cart || [];
+  const cartCount = cartItems.reduce(
+    (total, item) => total + (item.quantity || 0),
+    0
+  );
+
+  const isActive = (path) => {
+    if (path === "/") {
+      return location.pathname === "/";
+    }
+
+    return location.pathname.startsWith(path);
+  };
 
   const handleLogout = () => {
-    toast.success("Logged out successfully!");
-
-    setTimeout(() => {
-      logout();
-      navigate("/");
-      setMobileOpen(false);
-    }, 500);
+    logout();
+    setMobileOpen(false);
+    navigate("/login");
   };
 
   const closeMobile = () => {
@@ -39,267 +46,268 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/95 shadow-2xl shadow-slate-950/20 backdrop-blur-xl">
-      
-      {/* Top Gradient Line */}
-      <div className="absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600" />
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-slate-950/95 text-white shadow-xl backdrop-blur-xl">
+      <nav className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 sm:px-6 lg:px-8">
+        {/* LOGO */}
+        <Link
+          to="/"
+          onClick={closeMobile}
+          className="group flex items-center gap-3"
+        >
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 shadow-lg shadow-blue-500/25 transition duration-300 group-hover:scale-105 group-hover:rotate-3">
+            <ShoppingBag className="h-6 w-6" />
+          </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-[72px] items-center justify-between">
+          <div>
+            <div className="text-xl font-black tracking-tight">
+              Shop<span className="text-cyan-400">Mart</span>
+            </div>
+            <div className="hidden text-[9px] font-bold tracking-[0.25em] text-slate-500 sm:block">
+              SMART SHOPPING
+            </div>
+          </div>
+        </Link>
 
-          {/* ================= LOGO ================= */}
+        {/* DESKTOP NAVIGATION */}
+        <div className="hidden items-center gap-1 md:flex">
           <Link
             to="/"
-            onClick={closeMobile}
-            className="group flex items-center gap-3"
+            className={
+              "relative rounded-xl px-4 py-2.5 text-sm font-semibold transition " +
+              (isActive("/")
+                ? "text-cyan-300"
+                : "text-slate-300 hover:bg-white/5 hover:text-white")
+            }
           >
-            <div className="relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-600 shadow-lg shadow-blue-500/30 transition duration-500 group-hover:scale-110 group-hover:rotate-6">
-              <ShoppingBag className="relative h-6 w-6 text-white" />
+            Home
 
-              <div className="absolute inset-0 translate-y-full bg-white/20 transition duration-500 group-hover:translate-y-0" />
-            </div>
-
-            <div className="leading-none">
-              <span className="block text-xl font-black tracking-tight text-white">
-                Shop
-                <span className="bg-gradient-to-r from-cyan-300 to-purple-400 bg-clip-text text-transparent">
-                  Mart
-                </span>
-              </span>
-
-              <span className="mt-1 hidden text-[9px] font-semibold uppercase tracking-[0.3em] text-slate-500 sm:block">
-                Shop smarter
-              </span>
-            </div>
+            {isActive("/") && (
+              <span className="absolute bottom-0 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-cyan-400" />
+            )}
           </Link>
 
-          {/* ================= DESKTOP NAV ================= */}
-          <div className="hidden items-center gap-2 md:flex">
+          <Link
+            to="/products"
+            className={
+              "relative rounded-xl px-4 py-2.5 text-sm font-semibold transition " +
+              (isActive("/products")
+                ? "text-cyan-300"
+                : "text-slate-300 hover:bg-white/5 hover:text-white")
+            }
+          >
+            Products
 
+            {isActive("/products") && (
+              <span className="absolute bottom-0 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-cyan-400" />
+            )}
+          </Link>
+
+          {token && (
+            <Link
+              to="/orders"
+              className={
+                "relative rounded-xl px-4 py-2.5 text-sm font-semibold transition " +
+                (isActive("/orders")
+                  ? "text-cyan-300"
+                  : "text-slate-300 hover:bg-white/5 hover:text-white")
+              }
+            >
+              Orders
+
+              {isActive("/orders") && (
+                <span className="absolute bottom-0 left-1/2 h-0.5 w-5 -translate-x-1/2 rounded-full bg-cyan-400" />
+              )}
+            </Link>
+          )}
+
+          {user?.role === "admin" && (
+            <Link
+              to="/admin"
+              className="ml-1 flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold text-purple-300 transition hover:bg-purple-500/10 hover:text-purple-200"
+            >
+              <ShieldCheck className="h-4 w-4" />
+              Admin
+            </Link>
+          )}
+        </div>
+
+        {/* RIGHT SIDE */}
+        <div className="hidden items-center gap-3 md:flex">
+          {/* CART */}
+          <Link
+            to="/cart"
+            className="group relative flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 transition hover:border-cyan-400/20 hover:bg-white/10"
+            title="Shopping Cart"
+          >
+            <ShoppingCart className="h-5 w-5 text-slate-300 transition group-hover:text-cyan-300" />
+
+            {cartCount > 0 && (
+              <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-1 text-[10px] font-black text-white shadow-lg shadow-blue-500/30">
+                {cartCount}
+              </span>
+            )}
+          </Link>
+
+          {token ? (
+            <>
+              {/* USER */}
+              <Link
+                to="/profile"
+                className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-2 transition hover:border-cyan-400/20 hover:bg-white/10"
+              >
+                <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600">
+                  <User className="h-4 w-4" />
+                </div>
+
+                <div className="max-w-[110px]">
+                  <p className="truncate text-xs font-bold text-white">
+                    {user?.name || "User"}
+                  </p>
+                  <p className="text-[9px] font-medium text-slate-500">
+                    ACCOUNT
+                  </p>
+                </div>
+              </Link>
+
+              {/* LOGOUT */}
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 rounded-xl border border-red-500/10 bg-red-500/5 px-4 py-2.5 text-sm font-semibold text-red-300 transition hover:border-red-500/20 hover:bg-red-500/10 hover:text-red-200"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout
+              </button>
+            </>
+          ) : (
+            <Link
+              to="/login"
+              className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 px-5 py-2.5 text-sm font-bold shadow-lg shadow-blue-500/20 transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-500/30"
+            >
+              <LogIn className="h-4 w-4" />
+              Login
+            </Link>
+          )}
+        </div>
+
+        {/* MOBILE BUTTONS */}
+        <div className="flex items-center gap-2 md:hidden">
+          <Link
+            to="/cart"
+            onClick={closeMobile}
+            className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-white/5"
+          >
+            <ShoppingCart className="h-5 w-5" />
+
+            {cartCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-cyan-500 px-1 text-[10px] font-black">
+                {cartCount}
+              </span>
+            )}
+          </Link>
+
+          <button
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 transition hover:bg-white/10"
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
+          </button>
+        </div>
+      </nav>
+
+      {/* MOBILE MENU */}
+      {mobileOpen && (
+        <div className="border-t border-white/10 bg-slate-950 px-5 pb-5 md:hidden">
+          <div className="mx-auto flex max-w-7xl flex-col gap-2 pt-4">
             <Link
               to="/"
-              className="group relative rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-300 transition duration-300 hover:bg-white/5 hover:text-white"
+              onClick={closeMobile}
+              className={
+                "rounded-xl px-4 py-3 text-sm font-semibold transition " +
+                (isActive("/")
+                  ? "bg-cyan-500/10 text-cyan-300"
+                  : "text-slate-300 hover:bg-white/5")
+              }
             >
               Home
-
-              <span className="absolute bottom-1 left-4 right-4 h-[2px] origin-left scale-x-0 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 transition duration-300 group-hover:scale-x-100" />
             </Link>
 
             <Link
               to="/products"
-              className="group relative rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-300 transition duration-300 hover:bg-white/5 hover:text-white"
+              onClick={closeMobile}
+              className={
+                "rounded-xl px-4 py-3 text-sm font-semibold transition " +
+                (isActive("/products")
+                  ? "bg-cyan-500/10 text-cyan-300"
+                  : "text-slate-300 hover:bg-white/5")
+              }
             >
               Products
-
-              <span className="absolute bottom-1 left-4 right-4 h-[2px] origin-left scale-x-0 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 transition duration-300 group-hover:scale-x-100" />
             </Link>
-          </div>
 
-          {/* ================= RIGHT SIDE ================= */}
-          <div className="hidden items-center gap-2 md:flex">
+            {token && (
+              <Link
+                to="/orders"
+                onClick={closeMobile}
+                className={
+                  "flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition " +
+                  (isActive("/orders")
+                    ? "bg-cyan-500/10 text-cyan-300"
+                    : "text-slate-300 hover:bg-white/5")
+                }
+              >
+                <Package className="h-4 w-4" />
+                Orders
+              </Link>
+            )}
 
-            {/* CART */}
-            <Link
-              to="/cart"
-              className="group relative flex h-11 items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 text-slate-300 transition duration-300 hover:-translate-y-0.5 hover:border-cyan-400/30 hover:bg-cyan-500/10 hover:text-white"
-            >
-              <ShoppingCart className="h-5 w-5 transition duration-300 group-hover:scale-110" />
+            {token && (
+              <Link
+                to="/profile"
+                onClick={closeMobile}
+                className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-slate-300 transition hover:bg-white/5"
+              >
+                <User className="h-4 w-4" />
+                Profile
+              </Link>
+            )}
 
-              <span className="hidden text-sm font-semibold lg:block">
-                Cart
-              </span>
-
-              {cartItems > 0 && (
-                <span className="absolute -right-1.5 -top-1.5 flex h-5 min-w-5 items-center justify-center rounded-full bg-gradient-to-r from-cyan-400 to-blue-600 px-1 text-[10px] font-black text-white shadow-lg shadow-blue-500/40">
-                  {cartItems}
-                </span>
-              )}
-            </Link>
+            {user?.role === "admin" && (
+              <Link
+                to="/admin"
+                onClick={closeMobile}
+                className="flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold text-purple-300 transition hover:bg-purple-500/10"
+              >
+                <ShieldCheck className="h-4 w-4" />
+                Admin Dashboard
+              </Link>
+            )}
 
             {token ? (
-              <>
-                {/* ORDERS */}
-                <Link
-                  to="/orders"
-                  className="group flex h-11 items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 text-slate-300 transition duration-300 hover:-translate-y-0.5 hover:border-purple-400/30 hover:bg-purple-500/10 hover:text-white"
-                  title="My Orders"
-                >
-                  <Package className="h-5 w-5 transition duration-300 group-hover:scale-110" />
-
-                  <span className="hidden text-sm font-semibold lg:block">
-                    Orders
-                  </span>
-                </Link>
-
-                {/* ADMIN */}
-                {user?.role === "admin" && (
-                  <Link
-                    to="/admin"
-                    className="group flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-purple-500 to-blue-600 px-4 py-2.5 text-sm font-bold text-white shadow-lg shadow-purple-500/20 transition duration-300 hover:-translate-y-0.5 hover:shadow-purple-500/40"
-                  >
-                    Admin
-                    <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                  </Link>
-                )}
-
-                {/* USER */}
-                <div className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-3 py-1.5">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 shadow-md">
-                    <User className="h-4 w-4 text-white" />
-                  </div>
-
-                  <span className="max-w-[100px] truncate text-sm font-semibold text-slate-200">
-                    {user?.name || "User"}
-                  </span>
-                </div>
-
-                {/* LOGOUT */}
-                <button
-                  onClick={handleLogout}
-                  title="Logout"
-                  className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition duration-300 hover:border-red-400/30 hover:bg-red-500/10 hover:text-red-400"
-                >
-                  <LogOut className="h-5 w-5 transition group-hover:scale-110" />
-                </button>
-              </>
+              <button
+                onClick={handleLogout}
+                className="mt-2 flex items-center gap-3 rounded-xl border border-red-500/10 bg-red-500/5 px-4 py-3 text-left text-sm font-semibold text-red-300"
+              >
+                <LogOut className="h-4 w-4" />
+                Logout
+              </button>
             ) : (
-              /* LOGIN */
               <Link
                 to="/login"
-                className="group flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-purple-500/30"
+                onClick={closeMobile}
+                className="mt-2 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 px-4 py-3 text-sm font-bold"
               >
-                <User className="h-4 w-4 transition group-hover:scale-110" />
+                <LogIn className="h-4 w-4" />
                 Login
               </Link>
             )}
           </div>
-
-          {/* ================= MOBILE BUTTON ================= */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-300 transition duration-300 hover:bg-white/10 hover:text-white md:hidden"
-          >
-            {mobileOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
         </div>
-
-        {/* ================= MOBILE MENU ================= */}
-        {mobileOpen && (
-          <div className="border-t border-white/10 py-4 md:hidden">
-            <div className="space-y-2">
-
-              {/* HOME */}
-              <Link
-                to="/"
-                onClick={closeMobile}
-                className="flex items-center justify-between rounded-xl bg-white/5 px-4 py-3 font-semibold text-slate-200 transition hover:bg-blue-500/10 hover:text-white"
-              >
-                Home
-                <ChevronRight className="h-4 w-4" />
-              </Link>
-
-              {/* PRODUCTS */}
-              <Link
-                to="/products"
-                onClick={closeMobile}
-                className="flex items-center justify-between rounded-xl bg-white/5 px-4 py-3 font-semibold text-slate-200 transition hover:bg-blue-500/10 hover:text-white"
-              >
-                Products
-                <ChevronRight className="h-4 w-4" />
-              </Link>
-
-              {/* CART */}
-              <Link
-                to="/cart"
-                onClick={closeMobile}
-                className="flex items-center justify-between rounded-xl bg-white/5 px-4 py-3 font-semibold text-slate-200 transition hover:bg-blue-500/10 hover:text-white"
-              >
-                <span className="flex items-center gap-3">
-                  <ShoppingCart className="h-5 w-5" />
-                  Cart
-                </span>
-
-                {cartItems > 0 && (
-                  <span className="rounded-full bg-gradient-to-r from-cyan-400 to-blue-600 px-2 py-1 text-xs font-bold text-white">
-                    {cartItems}
-                  </span>
-                )}
-              </Link>
-
-              {token ? (
-                <>
-                  {/* ORDERS */}
-                  <Link
-                    to="/orders"
-                    onClick={closeMobile}
-                    className="flex items-center justify-between rounded-xl bg-white/5 px-4 py-3 font-semibold text-slate-200 transition hover:bg-purple-500/10 hover:text-white"
-                  >
-                    <span className="flex items-center gap-3">
-                      <Package className="h-5 w-5" />
-                      My Orders
-                    </span>
-
-                    <ChevronRight className="h-4 w-4" />
-                  </Link>
-
-                  {/* ADMIN */}
-                  {user?.role === "admin" && (
-                    <Link
-                      to="/admin"
-                      onClick={closeMobile}
-                      className="flex items-center justify-between rounded-xl bg-gradient-to-r from-purple-500 to-blue-600 px-4 py-3 font-bold text-white"
-                    >
-                      Admin Dashboard
-                      <ChevronRight className="h-4 w-4" />
-                    </Link>
-                  )}
-
-                  {/* USER */}
-                  <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-4 py-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600">
-                      <User className="h-4 w-4 text-white" />
-                    </div>
-
-                    <div>
-                      <p className="text-xs text-slate-500">
-                        Signed in as
-                      </p>
-
-                      <p className="font-semibold text-white">
-                        {user?.name || "User"}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* LOGOUT */}
-                  <button
-                    onClick={handleLogout}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-3 font-semibold text-red-400 transition hover:bg-red-500/20"
-                  >
-                    <LogOut className="h-5 w-5" />
-                    Logout
-                  </button>
-                </>
-              ) : (
-                /* MOBILE LOGIN */
-                <Link
-                  to="/login"
-                  onClick={closeMobile}
-                  className="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-600 px-4 py-3 font-bold text-white shadow-lg"
-                >
-                  <User className="h-5 w-5" />
-                  Login
-                </Link>
-              )}
-            </div>
-          </div>
-        )}
-      </div>
-    </nav>
+      )}
+    </header>
   );
 }
-```
