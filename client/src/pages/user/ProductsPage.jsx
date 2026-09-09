@@ -138,7 +138,7 @@ export default function ProductsPage() {
                 />
               </div>
 
-              {/* CATEGORY SELECT */}
+              {/* CATEGORY */}
               <div className="flex items-center gap-3">
                 <div className="hidden h-11 w-11 items-center justify-center rounded-xl bg-blue-50 text-blue-600 sm:flex">
                   <SlidersHorizontal size={19} />
@@ -180,15 +180,13 @@ export default function ProductsPage() {
           {/* RESULT COUNT */}
           {!loading && products.length > 0 && (
             <div className="mb-7 flex items-center justify-between">
-              <div>
-                <p className="text-sm font-semibold text-slate-500">
-                  Showing{" "}
-                  <span className="font-black text-slate-800">
-                    {products.length}
-                  </span>{" "}
-                  products
-                </p>
-              </div>
+              <p className="text-sm font-semibold text-slate-500">
+                Showing{" "}
+                <span className="font-black text-slate-800">
+                  {products.length}
+                </span>{" "}
+                products
+              </p>
 
               <div className="hidden items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-semibold text-slate-500 shadow-sm sm:flex">
                 <Package size={16} />
@@ -209,11 +207,8 @@ export default function ProductsPage() {
 
                   <div className="space-y-3 p-6">
                     <div className="h-4 w-20 animate-pulse rounded bg-slate-200" />
-
                     <div className="h-6 w-3/4 animate-pulse rounded bg-slate-200" />
-
                     <div className="h-4 w-full animate-pulse rounded bg-slate-200" />
-
                     <div className="h-11 w-full animate-pulse rounded-xl bg-slate-200" />
                   </div>
                 </div>
@@ -248,17 +243,10 @@ export default function ProductsPage() {
             <>
               {/* PRODUCT GRID */}
               <div className="grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {products.map((product, index) => (
+                {products.map((product) => (
                   <div
                     key={product._id}
                     className="group overflow-hidden rounded-[2rem] border border-slate-100 bg-white shadow-sm transition duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                    style={{
-                      animationName: "fadeUp",
-                      animationDuration: "0.6s",
-                      animationTimingFunction: "ease-out",
-                      animationDelay: index * 0.06 + "s",
-                      animationFillMode: "both",
-                    }}
                   >
                     {/* IMAGE */}
                     <Link to={"/products/" + product._id}>
@@ -274,15 +262,12 @@ export default function ProductsPage() {
                           className="h-full w-full object-cover transition duration-700 group-hover:scale-110"
                         />
 
-                        {/* IMAGE OVERLAY */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition duration-500 group-hover:opacity-100" />
 
-                        {/* CATEGORY */}
                         <span className="absolute left-4 top-4 rounded-full bg-slate-950/80 px-3 py-1.5 text-xs font-bold text-white backdrop-blur-md">
                           {product.category}
                         </span>
 
-                        {/* QUICK VIEW */}
                         <div className="absolute bottom-4 right-4 flex h-11 w-11 translate-y-3 items-center justify-center rounded-full bg-white text-blue-600 opacity-0 shadow-xl transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
                           <ArrowRight size={19} />
                         </div>
@@ -377,23 +362,6 @@ export default function ProductsPage() {
           )}
         </div>
       </section>
-
-      {/* ANIMATIONS */}
-      <style>
-        {`
-          @keyframes fadeUp {
-            from {
-              opacity: 0;
-              transform: translateY(25px);
-            }
-
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-        `}
-      </style>
     </div>
   );
 }
