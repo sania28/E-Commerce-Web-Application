@@ -638,59 +638,6 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
-
-      {/* ANIMATIONS */}
-      <style>
-        {`
-          @keyframes float {
-            0%, 100% {
-              transform: translateY(0px);
-            }
-
-            50% {
-              transform: translateY(-14px);
-            }
-          }
-
-          @keyframes fadeUp {
-            from {
-              opacity: 0;
-              transform: translateY(35px);
-            }
-
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          @keyframes pulseGlow {
-            0%, 100% {
-              opacity: 0.35;
-              transform: scale(1);
-            }
-
-            50% {
-              opacity: 0.75;
-              transform: scale(1.1);
-            }
-          }
-
-          @keyframes blobMove {
-            0%, 100% {
-              transform: translate(0px, 0px) scale(1);
-            }
-
-            33% {
-              transform: translate(30px, -20px) scale(1.05);
-            }
-
-            66% {
-              transform: translate(-20px, 25px) scale(0.95);
-            }
-          }
-        `}
-      </style>
     </div>
   );
 }
