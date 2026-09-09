@@ -2,11 +2,11 @@
   "name": "ecommerce-mini-project",
   "version": "1.0.0",
   "description": "Full-Stack E-Commerce Application with Admin Panel",
-  "main": "server/index.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "server": "nodemon server/index.js",
+    "server": "nodemon index.js",
     "client": "cd client && npm run dev",
     "build": "cd client && npm run build",
     "seed": "node server/seed.js"
