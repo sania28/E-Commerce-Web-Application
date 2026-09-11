@@ -20,6 +20,12 @@
 <img src="https://img.shields.io/badge/JWT-Authentication-black?style=for-the-badge&logo=jsonwebtokens" />
 <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" />
 
+<br/><br/>
+
+<a href="https://e-commerce-web-application-1-yhf9.onrender.com">
+<img src="https://img.shields.io/badge/🌐_Live_Website-ShopMart-00C853?style=for-the-badge&logo=googlechrome&logoColor=white" />
+</a>
+
 </div>
 
 ---
@@ -31,6 +37,14 @@
 The application provides a complete online shopping experience for users and a dedicated admin panel for managing products, orders and store operations.
 
 The UI focuses on a modern design with **Glassmorphism, animated gradients, hover effects, smooth transitions and responsive layouts**.
+
+---
+
+## 🌐 Live Demo
+
+🚀 **ShopMart is live!**
+
+👉 **https://e-commerce-web-application-1-yhf9.onrender.com**
 
 ---
 
